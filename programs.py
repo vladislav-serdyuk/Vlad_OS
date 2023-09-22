@@ -6,7 +6,7 @@
 
 class ИмяПрограмы(Program): # сосдаём класс
 
-    def __init__(self, c: Canvas, root: Tk): # lоопределяем метод __init__
+    def __init__(self, c: Canvas, root: Tk): # определяем метод __init__
         super().__init__(c, root)
         self.icon_image = tkinter.PhotoImage(file='путь/до/изображния.gif')
 
