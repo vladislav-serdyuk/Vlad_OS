@@ -1,12 +1,10 @@
 import tkinter
-
-from desktop import Desktop
-from taskbar import Taskbar
-from menu import MainMenu
-from programs import Power
 from tkinter import Tk, Canvas, messagebox
-from create_new_user_manager import NewUser
 import json
+import hashlib
+
+from menu import MainMenu
+from create_new_user_manager import NewUser
 
 
 class LogIn:
@@ -19,9 +17,8 @@ class LogIn:
                 self.config = json.load(file)
         except FileNotFoundError:
             NewUser()
-            # self.log_in()
         else:
-            self._root = tkinter.Toplevel(root)
+            self._root = tkinter.Toplevel(root)  # create window
             self._root.title('Log in manager')
 
             for r in range(3):
@@ -39,7 +36,7 @@ class LogIn:
             tkinter.Button(self._root, text='Log in', command=self.authentication).grid(column=2, row=2, sticky='NSEW')
 
     def authentication(self):
-        if self.password_entry.get() == self.config['password']:
+        if hashlib.sha256(self.password_entry.get().encode('utf-8')).hexdigest() == self.config['password_sha256']:
             self._root.destroy()
             self.log_in()
         else:
@@ -49,11 +46,7 @@ class LogIn:
         c = self.c
         root = self.root
         try:
-            Taskbar(c)
             menu: MainMenu = MainMenu(c, root)
-            power_button: Power = Power(c, root)
-
-            power_button.create_on_task_bar()
         except Exception as e:  # error_handler
             with open('log.txt', 'a') as file:
                 _date: str = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
