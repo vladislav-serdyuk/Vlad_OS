@@ -1,5 +1,7 @@
 import tkinter
 
+import hashlib
+
 
 class NewUser:
     def __init__(self):
@@ -24,7 +26,7 @@ class NewUser:
         default_config = \
             '{\n' + \
             f'  "name": "{self.name_entry.get()}",\n' + \
-            f'  "password": "{self.password_entry.get()}"\n' + \
+            f'  "password_sha256": "{hashlib.sha256(self.password_entry.get().encode("utf-8")).hexdigest()}"\n' + \
             '}'
         with open('user_config.json', 'w') as file:
             file.write(default_config)
