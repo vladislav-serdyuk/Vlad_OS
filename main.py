@@ -4,12 +4,12 @@
 
 import json
 from tkinter import Tk, Canvas, messagebox
-from desktop import Desktop
-# from vlad_taskbar import Taskbar
-# from vlad_menu import MainMenu
-# from vlad_programs import Power
-from log_in import LogIn
 from datetime import datetime
+
+from desktop import Desktop
+from taskbar import Taskbar
+from programs import Power
+from log_in import LogIn
 
 
 def delete_window() -> None:
@@ -37,29 +37,10 @@ if __name__ == '__main__':
     c: Canvas = Canvas(root, width=config['canvas_width'], height=config['canvas_height'])  # создание холста
     c.pack()
 
-    d = Desktop(c)
-    LogIn(root, c)
+    desktop = Desktop(c)
+    Taskbar(c)
+    power_button = Power(c, root)
+    power_button.create_on_task_bar()
+
+    LogIn(root, c)  # login
     root.mainloop()
-    # try:
-    #     NewUser()
-    #     desktop: Desktop = Desktop(c)
-    #     taskbar: Taskbar = Taskbar(c)
-    #     menu: MainMenu = MainMenu(c, root)
-    #     power_button: Power = Power(c, root)
-    #
-    #     power_button.create_on_task_bar()
-    # except Exception as e:  # error_handler
-    #     with open('log.txt', 'a') as file:
-    #         _date: str = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
-    #         file.write(f'{_date}: initSystem: {e}\n')
-    #     exit()
-    #
-    # c.bind('<Button-3>', menu.popup)
-    #
-    # try:
-    #     root.mainloop()
-    # except Exception as e:  # error_handler
-    #     with open('log.txt', 'a') as file:
-    #         _date: str = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
-    #         file.write(f'{_date}: procession: {e}\n')
-    #     exit()
