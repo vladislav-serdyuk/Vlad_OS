@@ -18,7 +18,7 @@ class LogIn:
         except FileNotFoundError:
             NewUser()
         else:
-            self._root = tkinter.Toplevel(root)  # create window
+            self._root = tkinter.Toplevel(root)  # create login window
             self._root.title('Log in manager')
 
             for r in range(3):
@@ -50,7 +50,7 @@ class LogIn:
         except Exception as e:  # error_handler
             with open('log.txt', 'a') as file:
                 _date: str = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
-                file.write(f'{_date}: initSystem: {e}\n')
+                file.write(f'{_date}: initMenu: {e}\n')
             exit()
 
         c.bind('<Button-3>', menu.popup)
