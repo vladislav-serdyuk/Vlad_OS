@@ -37,10 +37,16 @@ if __name__ == '__main__':
     c: Canvas = Canvas(root, width=config['canvas_width'], height=config['canvas_height'])  # создание холста
     c.pack()
 
-    desktop = Desktop(c)
-    Taskbar(c)
-    power_button = Power(c, root)
-    power_button.create_on_task_bar()
+    try:
+        desktop = Desktop(c)
+        Taskbar(c)
+        power_button = Power(c, root)
+        power_button.create_on_task_bar()
+    except Exception as e:  # error_handler
+        with open('log.txt', 'a') as file:
+            _date: str = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
+            file.write(f'{_date}: initSystem: {e}\n')
+        exit()
 
     LogIn(root, c)  # login
     root.mainloop()
