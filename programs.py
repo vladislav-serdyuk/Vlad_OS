@@ -6,7 +6,7 @@
 
 class ИмяПрограмы(Program): # сосдаём класс
 
-    def __init__(self, c: Canvas, root: Tk): # определяем метод __init__
+    def __init__(self, c: Canvas, root: Tk): # lоопределяем метод __init__
         super().__init__(c, root)
         self.icon_image = tkinter.PhotoImage(file='путь/до/изображния.gif')
 
@@ -40,6 +40,7 @@ class Program(ABC):
         self.root: Tk = root
         self.is_create: bool = False
         self.icon_image: PhotoImage = tkinter.PhotoImage(file='')
+        self.icon_pos_x = None
 
     def create_link(self, x: float, y: float) -> None:
         """
@@ -61,20 +62,25 @@ class Program(ABC):
         :param link_id: индефикатор ссылки
         :return: None
         """
-        global icon_shift
         self.c.delete(link_id)
         self.is_create = False
-        icon_shift -= icon_size
+        icon_pos.remove(self.icon_pos_x)
 
     def create_link_on_task_bar(self) -> None:
         """
         Создание ярлыка на панели задач
         :return: None
         """
-        global icon_shift
+        # global icon_shift
         if not self.is_create:
-            self.create_link(icon_shift, canvas_height)
-            icon_shift += icon_size
+            pos = 0
+            while True:  # перебор позицый иконки
+                if pos not in icon_pos:  # берём не занятую
+                    self.create_link(pos, canvas_height)
+                    icon_pos.add(pos)  # добавляем в список позицый
+                    self.icon_pos_x = pos
+                    return
+                pos += icon_size
 
     @staticmethod
     @abstractmethod
@@ -270,14 +276,12 @@ class ControlPanel(Program):
         keyboard.release(Key.media_volume_mute)
 
 
-class Power:
+class Power(Program):
     def __init__(self, c: Canvas, root: Tk) -> None:
-        self.c: Canvas = c
-        self.root: Tk = root
+        super().__init__(c, root)
         self.icon_image: PhotoImage = tkinter.PhotoImage(file='imgs/shut_down/Shutdown.gif')
-        self.canvas_h = canvas_height
 
-    def create(self, x, y) -> None:
+    def create_link(self, x, y) -> None:
         button: Button = tkinter.Button(height=icon_size, width=icon_size, image=self.icon_image, command=self.shutdown)
         self.c.create_window(x, y, height=icon_size, width=icon_size, anchor='sw', window=button)
         menu = tkinter.Menu(tearoff=0)
@@ -286,10 +290,9 @@ class Power:
         menu.add_command(label='Гибернация', command=self.hibernation)
         button.bind('<Button-3>', lambda event: menu.post(event.x_root, event.y_root))
 
-    def create_on_task_bar(self) -> None:
-        global icon_shift
-        self.create(icon_shift, canvas_height)
-        icon_shift += icon_size
+    @staticmethod
+    def open() -> None:
+        Power.shutdown()
 
     @staticmethod
     def shutdown() -> None:
@@ -346,4 +349,4 @@ with open("config.json") as config_file:
 
 canvas_height: int = config['canvas_height']
 icon_size: int = config['panel_h']
-icon_shift: int = 0
+icon_pos = set()  # координата x иконок
