@@ -2,3 +2,5 @@
 
 ### libraries:
 - wx
+- pillow
+- pynput
