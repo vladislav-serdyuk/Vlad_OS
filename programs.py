@@ -6,13 +6,13 @@
 
 class ИмяПрограмы(Program): # сосдаём класс
 
-    def __init__(self, c: Canvas, root: Tk): # lоопределяем метод __init__
+    def __init__(self, c: Canvas, root: Tk): # определяем метод __init__
         super().__init__(c, root)
-        self.icon_image = tkinter.PhotoImage(file='путь/до/изображния.gif')
+        self.icon_image = ImageTk.PhotoImage(Image.open('путь/до/изображния.png').resize((icon_size, icon_size)))
 
     @staticmethod
     def open() -> None:
-        # код прои открытии
+        # код при открытии
 
 """
 
@@ -21,6 +21,7 @@ import json
 from pynput.keyboard import Key, Controller
 from tkinter import Canvas, Tk, PhotoImage, Button, Menu, Toplevel, Label
 from abc import ABC, abstractmethod
+from PIL import Image, ImageTk
 
 
 class Program(ABC):
@@ -39,7 +40,7 @@ class Program(ABC):
         self.c: Canvas = c
         self.root: Tk = root
         self.is_create: bool = False
-        self.icon_image: PhotoImage = tkinter.PhotoImage(file='')
+        # self.icon_image: PhotoImage = ImageTk.PhotoImage(Image.open('').resize((icon_size, icon_size)))
         self.icon_pos_x = None
 
     def create_link(self, x: float, y: float) -> None:
@@ -94,7 +95,7 @@ class About(Program):
 
     def __init__(self, c: Canvas, root: Tk):
         super().__init__(c, root)
-        self.icon_image = tkinter.PhotoImage(file='imgs/about/about.gif')
+        self.icon_image = ImageTk.PhotoImage(Image.open('imgs/about/about.png').resize((icon_size, icon_size)))
 
     @staticmethod
     def open() -> None:
@@ -118,7 +119,7 @@ class About(Program):
 class Prog(Program):
     def __init__(self, c: Canvas, root: Tk):
         super().__init__(c, root)
-        self.icon_image = tkinter.PhotoImage(file='imgs/hw/HW.gif')
+        self.icon_image = ImageTk.PhotoImage(Image.open('imgs/hw/HW.png').resize((icon_size, icon_size)))
 
     @staticmethod
     def open() -> None:
@@ -135,7 +136,8 @@ class ControlPanel(Program):
 
     def __init__(self, c: Canvas, root: Tk):
         super().__init__(c, root)
-        self.icon_image = tkinter.PhotoImage(file='imgs/control_panel/control_panel.gif')
+        self.icon_image = ImageTk.PhotoImage(Image.open('imgs/control_panel/control_panel.png')
+                                             .resize((icon_size, icon_size)))
 
     def open(self) -> None:
         _root: Toplevel = tkinter.Toplevel()
@@ -278,7 +280,8 @@ class ControlPanel(Program):
 class Power(Program):
     def __init__(self, c: Canvas, root: Tk) -> None:
         super().__init__(c, root)
-        self.icon_image: PhotoImage = tkinter.PhotoImage(file='imgs/shut_down/Shutdown.gif')
+        self.icon_image: PhotoImage = ImageTk.PhotoImage(Image.open('imgs/shut_down/Shutdown.png')
+                                                         .resize((icon_size, icon_size)))
 
     def create_link(self, x, y) -> None:
         button: Button = tkinter.Button(height=icon_size, width=icon_size, image=self.icon_image, command=self.shutdown)
@@ -313,7 +316,7 @@ class Power(Program):
 class Pentagon(Program):
     def __init__(self, c: Canvas, root: Tk):
         super().__init__(c, root)
-        self.icon_image = tkinter.PhotoImage(file='imgs/penta/pentagon.gif')
+        self.icon_image = ImageTk.PhotoImage(Image.open('imgs/penta/pentagon.png').resize((icon_size, icon_size)))
 
     @staticmethod
     def open() -> None:
@@ -324,7 +327,7 @@ class Pentagon(Program):
 class Cmd(Program):
     def __init__(self, c: Canvas, root: Tk):
         super().__init__(c, root)
-        self.icon_image = tkinter.PhotoImage(file='imgs/cmd/cmd.gif')
+        self.icon_image = ImageTk.PhotoImage(Image.open('imgs/cmd/cmd.png').resize((icon_size, icon_size)))
 
     @staticmethod
     def open() -> None:
@@ -335,7 +338,7 @@ class Cmd(Program):
 class Word(Program):
     def __init__(self, c: Canvas, root: Tk):
         super().__init__(c, root)
-        self.icon_image = tkinter.PhotoImage(file='imgs/word/word.gif')
+        self.icon_image = ImageTk.PhotoImage(Image.open('imgs/word/word.png').resize((icon_size, icon_size)))
 
     @staticmethod
     def open():
