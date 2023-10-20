@@ -71,7 +71,6 @@ class Program(ABC):
         Создание ярлыка на панели задач
         :return: None
         """
-        # global icon_shift
         if not self.is_create:
             pos = 0
             while True:  # перебор позицый иконки
