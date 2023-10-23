@@ -1,5 +1,5 @@
 import tkinter
-from tkinter import Tk, Canvas, messagebox
+from tkinter import Tk, Canvas, messagebox, ttk
 import json
 import hashlib
 
@@ -19,6 +19,7 @@ class LogIn:
             NewUser()
         else:
             self._root = tkinter.Toplevel(root)  # create login window
+            self._root.resizable(True, False)
             self._root.title('Log in manager')
 
             for r in range(3):
@@ -27,13 +28,13 @@ class LogIn:
             for c in range(3):
                 self._root.grid_columnconfigure(c, weight=1)
 
-            tkinter.Label(self._root, text='Name').grid(column=0, row=0)
-            self.name_label = tkinter.Label(self._root, text=self.config['name'])
+            ttk.Label(self._root, text='Name').grid(column=0, row=0)
+            self.name_label = ttk.Label(self._root, text=self.config['name'])
             self.name_label.grid(column=1, row=0, columnspan=2)
-            tkinter.Label(self._root, text='Password').grid(column=0, row=1)
-            self.password_entry = tkinter.Entry(self._root)
+            ttk.Label(self._root, text='Password').grid(column=0, row=1)
+            self.password_entry = ttk.Entry(self._root)
             self.password_entry.grid(column=1, row=1, columnspan=2, sticky='NSEW')
-            tkinter.Button(self._root, text='Log in', command=self.authentication).grid(column=2, row=2, sticky='NSEW')
+            ttk.Button(self._root, text='Log in', command=self.authentication).grid(column=2, row=2, sticky='NSEW')
 
     def authentication(self):
         if hashlib.sha256(self.password_entry.get().encode('utf-8')).hexdigest() == self.config['password_sha256']:
