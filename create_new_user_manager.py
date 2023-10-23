@@ -1,11 +1,12 @@
 import tkinter
-
+from tkinter import ttk
 import hashlib
 
 
 class NewUser:
     def __init__(self):
         self.root = tkinter.Toplevel()
+        self.root.resizable(True, False)
         self.root.title('Create new user manager')
 
         for r in range(3):
@@ -14,13 +15,13 @@ class NewUser:
         for c in range(3):
             self.root.grid_columnconfigure(c, weight=1)
 
-        tkinter.Label(self.root, text='Name').grid(column=0, row=0)
-        self.name_entry = tkinter.Entry(self.root)
+        ttk.Label(self.root, text='Name').grid(column=0, row=0)
+        self.name_entry = ttk.Entry(self.root)
         self.name_entry.grid(column=1, row=0, columnspan=2, sticky='NSEW')
-        tkinter.Label(self.root, text='Password').grid(column=0, row=1)
-        self.password_entry = tkinter.Entry(self.root)
+        ttk.Label(self.root, text='Password').grid(column=0, row=1)
+        self.password_entry = ttk.Entry(self.root)
         self.password_entry.grid(column=1, row=1, columnspan=2, sticky='NSEW')
-        tkinter.Button(self.root, text='Create', command=self.create).grid(column=2, row=2, sticky='NSEW')
+        ttk.Button(self.root, text='Create', command=self.create).grid(column=2, row=2, sticky='NSEW')
 
     def create(self):
         default_config = \
