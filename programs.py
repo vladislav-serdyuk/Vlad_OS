@@ -17,6 +17,7 @@ class ИмяПрограмы(Program): # сосдаём класс
 """
 
 import tkinter
+from tkinter import ttk
 import json
 from pynput.keyboard import Key, Controller
 from tkinter import Canvas, Tk, PhotoImage, Button, Menu, Toplevel, Label
@@ -103,7 +104,7 @@ class About(Program):
         _root.geometry('250x150')
         _root.iconbitmap('imgs/about/about.ico')
         _root.title('Приступая к работе')
-        text: Label = tkinter.Label(_root, text='''
+        text: Label = ttk.Label(_root, text='''
         Опирационая система vladOS.
         
         Для перезагруски и гибернации
@@ -127,7 +128,7 @@ class Prog(Program):
         _root.geometry('170x100')
         _root.iconbitmap('imgs/hw/HW.ico')
         _root.title('HW')
-        text: Label = tkinter.Label(_root, text='hello world')
+        text: Label = ttk.Label(_root, text='hello world')
         text.pack()
         _root.mainloop()
 
@@ -151,16 +152,16 @@ class ControlPanel(Program):
         for c in range(2):
             _root.grid_columnconfigure(c, weight=1)
 
-        tkinter.Button(_root, text='Мышь', command=self.open_mouse_menu).grid(row=0, column=0, sticky='NSEW')
-        tkinter.Button(_root, text='Завершение работы', command=Power.shutdown, ) \
+        ttk.Button(_root, text='Мышь', command=self.open_mouse_menu).grid(row=0, column=0, sticky='NSEW')
+        ttk.Button(_root, text='Завершение работы', command=Power.shutdown, ) \
             .grid(row=1, column=0, sticky='NSEW')
-        tkinter.Button(_root, text='Скрин шот', command=ControlPanel.screen_shot) \
+        ttk.Button(_root, text='Скрин шот', command=ControlPanel.screen_shot) \
             .grid(row=0, column=1, sticky='NSEW')
-        tkinter.Button(_root, text='Приступая к работе', command=About.open) \
+        ttk.Button(_root, text='Приступая к работе', command=About.open) \
             .grid(row=1, column=1, sticky='NSEW')
-        tkinter.Button(_root, text='Компаненты', command=self.open_modul_menu) \
+        ttk.Button(_root, text='Компаненты', command=self.open_modul_menu) \
             .grid(row=2, column=0, sticky='NSEW')
-        tkinter.Button(_root, text='Звук', command=self.open_sound_menu).grid(row=2, column=1, sticky='NSEW')
+        ttk.Button(_root, text='Звук', command=self.open_sound_menu).grid(row=2, column=1, sticky='NSEW')
 
         _root.mainloop()
 
@@ -184,30 +185,30 @@ class ControlPanel(Program):
         for c in range(4):
             _root.grid_columnconfigure(c, weight=1)
 
-        tkinter.Button(_root, text='Сделать курсор по умолчанию', command=lambda: self.root.config(cursor='arrow')) \
+        ttk.Button(_root, text='Сделать курсор по умолчанию', command=lambda: self.root.config(cursor='arrow')) \
             .grid(row=0, column=0, columnspan=2, sticky='NSEW')
-        tkinter.Button(_root, text='Сделать курсор рука-курсор', command=lambda: self.root.config(cursor='hand2')) \
+        ttk.Button(_root, text='Сделать курсор рука-курсор', command=lambda: self.root.config(cursor='hand2')) \
             .grid(row=1, column=0, columnspan=2, sticky='NSEW')
 
-        tkinter.Label(_root, text='Свой курсор').grid(row=0, column=2, columnspan=2, sticky='NSEW')
-        entry = tkinter.Entry(_root)
+        ttk.Label(_root, text='Свой курсор').grid(row=0, column=2, columnspan=2, sticky='NSEW')
+        entry = ttk.Entry(_root)
         entry.grid(row=1, column=2, columnspan=2, sticky='NSEW')
 
-        tkinter.Button(_root, text='Man', command=lambda: self.root.config(cursor='man')) \
+        ttk.Button(_root, text='Man', command=lambda: self.root.config(cursor='man')) \
             .grid(row=2, column=0, sticky='NSEW')
-        tkinter.Button(_root, text='Star', command=lambda: self.root.config(cursor='star')) \
+        ttk.Button(_root, text='Star', command=lambda: self.root.config(cursor='star')) \
             .grid(row=2, column=1, sticky='NSEW')
-        tkinter.Button(_root, text='Plus', command=lambda: self.root.config(cursor='plus')) \
+        ttk.Button(_root, text='Plus', command=lambda: self.root.config(cursor='plus')) \
             .grid(row=2, column=2, sticky='NSEW')
-        tkinter.Button(_root, text='Cross', command=lambda: self.root.config(cursor='cross')) \
+        ttk.Button(_root, text='Cross', command=lambda: self.root.config(cursor='cross')) \
             .grid(row=2, column=3, sticky='NSEW')
-        tkinter.Button(_root, text='Circle', command=lambda: self.root.config(cursor='circle')) \
+        ttk.Button(_root, text='Circle', command=lambda: self.root.config(cursor='circle')) \
             .grid(row=3, column=0, sticky='NSEW')
-        tkinter.Button(_root, text='Dot', command=lambda: self.root.config(cursor='dot')) \
+        ttk.Button(_root, text='Dot', command=lambda: self.root.config(cursor='dot')) \
             .grid(row=3, column=1, sticky='NSEW')
-        tkinter.Button(_root, text='Target', command=lambda: self.root.config(cursor='target')) \
+        ttk.Button(_root, text='Target', command=lambda: self.root.config(cursor='target')) \
             .grid(row=3, column=2, sticky='NSEW')
-        tkinter.Button(_root, text='Hand1', command=lambda: self.root.config(cursor='hand1')) \
+        ttk.Button(_root, text='Hand1', command=lambda: self.root.config(cursor='hand1')) \
             .grid(row=3, column=3, sticky='NSEW')
 
         entry.bind('<Return>', lambda event: self.root.config(cursor=entry.get()))
@@ -227,15 +228,15 @@ class ControlPanel(Program):
         for r in range(9):
             _root.grid_rowconfigure(r, weight=1)
 
-        tkinter.Label(_root, text='Vlad desktop background').grid(row=0, column=0, sticky='w')
-        tkinter.Label(_root, text='Vlad taskbar').grid(row=1, column=0, sticky='w')
-        tkinter.Label(_root, text='Vlad main context menu').grid(row=2, column=0, sticky='w')
-        tkinter.Label(_root, text='About').grid(row=3, column=0, sticky='w')
-        tkinter.Label(_root, text='Control Panel').grid(row=4, column=0, sticky='w')
-        tkinter.Label(_root, text='HW').grid(row=5, column=0, sticky='w')
-        tkinter.Label(_root, text='Pentagon').grid(row=6, column=0, sticky='w')
-        tkinter.Label(_root, text='vlad log in').grid(row=7, column=0, sticky='w')
-        tkinter.Label(_root, text='vlad create new user manager').grid(row=8, column=0, sticky='w')
+        ttk.Label(_root, text='Vlad desktop background').grid(row=0, column=0, sticky='w')
+        ttk.Label(_root, text='Vlad taskbar').grid(row=1, column=0, sticky='w')
+        ttk.Label(_root, text='Vlad main context menu').grid(row=2, column=0, sticky='w')
+        ttk.Label(_root, text='About').grid(row=3, column=0, sticky='w')
+        ttk.Label(_root, text='Control Panel').grid(row=4, column=0, sticky='w')
+        ttk.Label(_root, text='HW').grid(row=5, column=0, sticky='w')
+        ttk.Label(_root, text='Pentagon').grid(row=6, column=0, sticky='w')
+        ttk.Label(_root, text='vlad log in').grid(row=7, column=0, sticky='w')
+        ttk.Label(_root, text='vlad create new user manager').grid(row=8, column=0, sticky='w')
 
         _root.mainloop()
 
@@ -250,12 +251,12 @@ class ControlPanel(Program):
         for r in range(3):
             _root.grid_rowconfigure(r, weight=1)
 
-        tkinter.Button(_root, text='Прибавить звук',
-                       command=ControlPanel.sound_up).grid(row=0, column=0, sticky='NSEW')
-        tkinter.Button(_root, text='Уменьшить звук',
-                       command=ControlPanel.sound_down).grid(row=1, column=0, sticky='NSEW')
-        tkinter.Button(_root, text='Выключить звук',
-                       command=ControlPanel.sound_mute).grid(row=2, column=0, sticky='NSEW')
+        ttk.Button(_root, text='Прибавить звук',
+                   command=ControlPanel.sound_up).grid(row=0, column=0, sticky='NSEW')
+        ttk.Button(_root, text='Уменьшить звук',
+                   command=ControlPanel.sound_down).grid(row=1, column=0, sticky='NSEW')
+        ttk.Button(_root, text='Выключить звук',
+                   command=ControlPanel.sound_mute).grid(row=2, column=0, sticky='NSEW')
         _root.mainloop()
 
     @staticmethod
