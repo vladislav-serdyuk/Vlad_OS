@@ -56,10 +56,3 @@ class LogIn:
 
         c.bind('<Button-3>', menu.popup)
 
-        try:
-            root.mainloop()
-        except Exception as e:  # error_handler
-            with open('log.txt', 'a') as file:
-                _date: str = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
-                file.write(f'{_date}: procession: {e}\n')
-            exit()
