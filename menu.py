@@ -43,14 +43,13 @@ class MainMenu:
 
         self.menu.add_separator()
 
-        self.menu.add_command(label='place on taskbar "Панель управления"',
+        self.menu.add_command(label='Place on taskbar Control panel',
                               command=control_panel.create_link_on_task_bar)
-        self.menu.add_command(label='place on taskbar About', command=about.create_link_on_task_bar)
-        self.menu.add_command(label='place on taskbar Terminal', command=cmd.create_link_on_task_bar)
-        self.menu.add_command(label='place on taskbar Word',
-                              command=word.create_link_on_task_bar)
-        self.menu.add_command(label='place on taskbar HW', command=prog.create_link_on_task_bar)
-        self.menu.add_command(label='place on taskbar "взлом пентагона"',
+        self.menu.add_command(label='Place on taskbar About', command=about.create_link_on_task_bar)
+        self.menu.add_command(label='Place on taskbar Terminal', command=cmd.create_link_on_task_bar)
+        self.menu.add_command(label='Place on taskbar Word', command=word.create_link_on_task_bar)
+        self.menu.add_command(label='Place on taskbar HW', command=prog.create_link_on_task_bar)
+        self.menu.add_command(label='Place on taskbar "Взлом пентагона"',
                               command=pentagon.create_link_on_task_bar)
 
     def popup(self, event: Event) -> None:
@@ -60,5 +59,3 @@ class MainMenu:
         :return: None
         """
         self.menu.post(event.x_root, event.y_root)
-
-    # def error_handler(self, command:):
