@@ -36,21 +36,21 @@ class MainMenu:
                 file.write(f'{_date}: initModuls: {e}\n')
             return
 
-        self.menu.add_command(label='Открыть панель управления', command=control_panel.open)
-        self.menu.add_command(label='Открыть приложение "О программе"', command=about.open)
-        self.menu.add_command(label='Открыть командную строку', command=cmd.open)
-        self.menu.add_command(label='Открыть Word', command=word.open)
+        self.menu.add_command(label='Open Control panel', command=control_panel.open)
+        self.menu.add_command(label='Open "About"', command=about.open)
+        self.menu.add_command(label='Open Terminal', command=cmd.open)
+        self.menu.add_command(label='Open Word', command=word.open)
 
         self.menu.add_separator()
 
-        self.menu.add_command(label='Создать ярлык приложения "Панель управления"',
+        self.menu.add_command(label='place on taskbar "Панель управления"',
                               command=control_panel.create_link_on_task_bar)
-        self.menu.add_command(label='Создать ярлык приложения "О программе"', command=about.create_link_on_task_bar)
-        self.menu.add_command(label='Создать ярлык приложения "Командная строка"', command=cmd.create_link_on_task_bar)
-        self.menu.add_command(label='Создать приложение "Word"',
+        self.menu.add_command(label='place on taskbar About', command=about.create_link_on_task_bar)
+        self.menu.add_command(label='place on taskbar Terminal', command=cmd.create_link_on_task_bar)
+        self.menu.add_command(label='place on taskbar Word',
                               command=word.create_link_on_task_bar)
-        self.menu.add_command(label='создать ярлык приложения', command=prog.create_link_on_task_bar)
-        self.menu.add_command(label='Создать ярлык приложения "взлом пентагона"',
+        self.menu.add_command(label='place on taskbar HW', command=prog.create_link_on_task_bar)
+        self.menu.add_command(label='place on taskbar "взлом пентагона"',
                               command=pentagon.create_link_on_task_bar)
 
     def popup(self, event: Event) -> None:
