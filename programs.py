@@ -4,11 +4,11 @@
 
 Для создания программы пишем:
 
-class ИмяПрограмы(Program): # сосдаём класс
+class ProgName(Program): # сосдаём класс
 
-    def __init__(self, c: Canvas, root: Tk): # определяем метод __init__
+    def __init__(self, c: Canvas, root: Tk):
         super().__init__(c, root)
-        self.icon_image = ImageTk.PhotoImage(Image.open('путь/до/изображния.png').resize((icon_size, icon_size)))
+        self.icon_image = ImageTk.PhotoImage(Image.open('path/to/image.png').resize((icon_size, icon_size)))
 
     @staticmethod
     def open() -> None:
@@ -34,9 +34,10 @@ class Program(ABC):
     def __init__(self, c: Canvas, root: Tk) -> None:
         r"""
         Абстрактный метод создания программы.
-        Необгодимо изменить self.icon_image на tkinter.PhotoImage(file='путь\до\изображения.gif')
+        Необгодимо изменить self.icon_image на tkinter.PhotoImage(file='path\to\image.gif')
         :param c: холст
         :param root: окно
+        :return None
         """
         self.c: Canvas = c
         self.root: Tk = root
@@ -109,15 +110,18 @@ class About(Program):
         
         Для перезагруски и гибернации
         нажмите правой кнопкой мышы
-        по кнопке питания.
+        по кнопке питания.r
         
-        Дальше рабирайтесь сами.
+        Дальше рабирайтесь сами :)
         ''')
         text.pack()
         _root.mainloop()
 
 
 class Prog(Program):
+    """
+    debug prog
+    """
     def __init__(self, c: Canvas, root: Tk):
         super().__init__(c, root)
         self.icon_image = ImageTk.PhotoImage(Image.open('imgs/hw/HW.png').resize((icon_size, icon_size)))
@@ -144,7 +148,7 @@ class ControlPanel(Program):
         _root: Toplevel = tkinter.Toplevel()
         _root.geometry('250x80')
         _root.iconbitmap('imgs/control_panel/control_panel.ico')
-        _root.title('Панель управления')
+        _root.title('Control panel')
 
         for r in range(3):
             _root.grid_rowconfigure(r, weight=1)
@@ -152,21 +156,21 @@ class ControlPanel(Program):
         for c in range(2):
             _root.grid_columnconfigure(c, weight=1)
 
-        ttk.Button(_root, text='Мышь', command=self.open_mouse_menu).grid(row=0, column=0, sticky='NSEW')
-        ttk.Button(_root, text='Завершение работы', command=Power.shutdown, ) \
+        ttk.Button(_root, text='Mouse', command=self.open_mouse_menu).grid(row=0, column=0, sticky='NSEW')
+        ttk.Button(_root, text='Shutdown', command=Power.shutdown, ) \
             .grid(row=1, column=0, sticky='NSEW')
-        ttk.Button(_root, text='Скрин шот', command=ControlPanel.screen_shot) \
+        ttk.Button(_root, text='Screenshot', command=ControlPanel.screenshot) \
             .grid(row=0, column=1, sticky='NSEW')
-        ttk.Button(_root, text='Приступая к работе', command=About.open) \
+        ttk.Button(_root, text='Getting started', command=About.open) \
             .grid(row=1, column=1, sticky='NSEW')
-        ttk.Button(_root, text='Компаненты', command=self.open_modul_menu) \
+        ttk.Button(_root, text='Components', command=self.open_modul_menu) \
             .grid(row=2, column=0, sticky='NSEW')
-        ttk.Button(_root, text='Звук', command=self.open_sound_menu).grid(row=2, column=1, sticky='NSEW')
+        ttk.Button(_root, text='Sound', command=self.open_sound_menu).grid(row=2, column=1, sticky='NSEW')
 
         _root.mainloop()
 
     @staticmethod
-    def screen_shot() -> None:
+    def screenshot() -> None:
         keyboard: Controller = Controller()
         keyboard.press(Key.cmd)  # win
         keyboard.press(Key.print_screen)
@@ -185,12 +189,12 @@ class ControlPanel(Program):
         for c in range(4):
             _root.grid_columnconfigure(c, weight=1)
 
-        ttk.Button(_root, text='Сделать курсор по умолчанию', command=lambda: self.root.config(cursor='arrow')) \
+        ttk.Button(_root, text='Set default cursor', command=lambda: self.root.config(cursor='arrow')) \
             .grid(row=0, column=0, columnspan=2, sticky='NSEW')
-        ttk.Button(_root, text='Сделать курсор рука-курсор', command=lambda: self.root.config(cursor='hand2')) \
+        ttk.Button(_root, text='Set hand2 cursor', command=lambda: self.root.config(cursor='hand2')) \
             .grid(row=1, column=0, columnspan=2, sticky='NSEW')
 
-        ttk.Label(_root, text='Свой курсор').grid(row=0, column=2, columnspan=2, sticky='NSEW')
+        ttk.Label(_root, text='Other cursor').grid(row=0, column=2, columnspan=2, sticky='NSEW')
         entry = ttk.Entry(_root)
         entry.grid(row=1, column=2, columnspan=2, sticky='NSEW')
 
@@ -220,7 +224,7 @@ class ControlPanel(Program):
         _root: Toplevel = tkinter.Toplevel()
         _root.geometry('150x150')
         _root.iconbitmap('imgs/control_panel/control_panel.ico')
-        _root.title('Компаненты')
+        _root.title('Components')
 
         for c in range(1):
             _root.grid_columnconfigure(c, weight=1)
@@ -228,15 +232,15 @@ class ControlPanel(Program):
         for r in range(9):
             _root.grid_rowconfigure(r, weight=1)
 
-        ttk.Label(_root, text='Vlad desktop background').grid(row=0, column=0, sticky='w')
-        ttk.Label(_root, text='Vlad taskbar').grid(row=1, column=0, sticky='w')
-        ttk.Label(_root, text='Vlad main context menu').grid(row=2, column=0, sticky='w')
+        ttk.Label(_root, text='Desktop').grid(row=0, column=0, sticky='w')
+        ttk.Label(_root, text='Taskbar').grid(row=1, column=0, sticky='w')
+        ttk.Label(_root, text='Main context menu').grid(row=2, column=0, sticky='w')
         ttk.Label(_root, text='About').grid(row=3, column=0, sticky='w')
         ttk.Label(_root, text='Control Panel').grid(row=4, column=0, sticky='w')
         ttk.Label(_root, text='HW').grid(row=5, column=0, sticky='w')
         ttk.Label(_root, text='Pentagon').grid(row=6, column=0, sticky='w')
-        ttk.Label(_root, text='vlad log in').grid(row=7, column=0, sticky='w')
-        ttk.Label(_root, text='vlad create new user manager').grid(row=8, column=0, sticky='w')
+        ttk.Label(_root, text='Log in manager').grid(row=7, column=0, sticky='w')
+        ttk.Label(_root, text='Create new user manager').grid(row=8, column=0, sticky='w')
 
         _root.mainloop()
 
@@ -245,17 +249,17 @@ class ControlPanel(Program):
         _root: Toplevel = tkinter.Toplevel()
         _root.geometry('150x75')
         _root.iconbitmap('imgs/control_panel/control_panel.ico')
-        _root.title('Рабочий стол')
+        _root.title('Sound')
 
         _root.grid_columnconfigure(0, weight=1)
         for r in range(3):
             _root.grid_rowconfigure(r, weight=1)
 
-        ttk.Button(_root, text='Прибавить звук',
+        ttk.Button(_root, text='Up sound',
                    command=ControlPanel.sound_up).grid(row=0, column=0, sticky='NSEW')
-        ttk.Button(_root, text='Уменьшить звук',
+        ttk.Button(_root, text='Down sound',
                    command=ControlPanel.sound_down).grid(row=1, column=0, sticky='NSEW')
-        ttk.Button(_root, text='Выключить звук',
+        ttk.Button(_root, text='Mute sound',
                    command=ControlPanel.sound_mute).grid(row=2, column=0, sticky='NSEW')
         _root.mainloop()
 
@@ -289,8 +293,8 @@ class Power(Program):
         self.c.create_window(x, y, height=icon_size, width=icon_size, anchor='sw', window=button)
         menu = tkinter.Menu(tearoff=0)
         # menu.add_command(label='Сон', command=self.sleep)
-        menu.add_command(label='Перезагрузка', command=self.restart)
-        menu.add_command(label='Гибернация', command=self.hibernation)
+        menu.add_command(label='Reboot', command=self.restart)
+        menu.add_command(label='Hibernation', command=self.hibernation)
         button.bind('<Button-3>', lambda event: menu.post(event.x_root, event.y_root))
 
     @staticmethod
@@ -302,7 +306,7 @@ class Power(Program):
         os.system('shutdown /p')
 
     @staticmethod
-    def sleep() -> None:
+    def sleep() -> None:  # in developering
         os.system('rundll32.exe powrprof.dll,SetSuspendState Stadby')
 
     @staticmethod
