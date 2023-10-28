@@ -51,7 +51,7 @@ class Taskbar:
         :return: день недели из списка Пн, Вт, Ср, Чт, Пт, Сб, Вс
         """
         n: int = datetime.weekday(datetime.now())
-        return ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'][n]
+        return ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][n]
 
     def run_taskbar(self) -> None:
         """
