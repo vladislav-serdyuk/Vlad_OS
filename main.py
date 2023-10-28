@@ -18,7 +18,7 @@ def delete_window() -> None:
     Спрашевает перед закрытием.
     :return: None
     """
-    _ask: bool = messagebox.askyesno('Потверждение выхода из оболочки', 'Вы дествительно хотите выйти из оболочки?')
+    _ask: bool = messagebox.askyesno('Выход из оболочки', 'Выйти?')
     if _ask:
         root.destroy()
 
@@ -41,7 +41,7 @@ if __name__ == '__main__':
         desktop = Desktop(c)
         Taskbar(c)
         power_button = Power(c, root)
-        power_button.create_on_task_bar()
+        power_button.create_link_on_task_bar()
     except Exception as e:  # error_handler
         with open('log.txt', 'a') as file:
             _date: str = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
