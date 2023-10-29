@@ -37,7 +37,7 @@ class MainMenu:
             return
 
         self.menu.add_command(label='Open Control panel', command=control_panel.open)
-        self.menu.add_command(label='Open "About"', command=about.open)
+        self.menu.add_command(label='Open About', command=about.open)
         self.menu.add_command(label='Open Terminal', command=cmd.open)
         self.menu.add_command(label='Open Word', command=word.open)
 
