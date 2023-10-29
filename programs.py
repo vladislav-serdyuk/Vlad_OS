@@ -104,13 +104,13 @@ class About(Program):
         _root: Toplevel = tkinter.Toplevel()
         _root.geometry('250x150')
         _root.iconbitmap('imgs/about/about.ico')
-        _root.title('Приступая к работе')
+        _root.title('Getting started')
         text: Label = ttk.Label(_root, text='''
         Опирационая система vladOS.
         
         Для перезагруски и гибернации
         нажмите правой кнопкой мышы
-        по кнопке питания.r
+        по кнопке питания
         
         Дальше рабирайтесь сами :)
         ''')
@@ -181,7 +181,7 @@ class ControlPanel(Program):
         _root: Toplevel = tkinter.Toplevel()
         _root.geometry('300x100')
         _root.iconbitmap('imgs/control_panel/control_panel.ico')
-        _root.title('Мышь')
+        _root.title('Mouse')
 
         for r in range(4):
             _root.grid_rowconfigure(r, weight=1)
