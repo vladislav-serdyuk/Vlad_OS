@@ -18,7 +18,7 @@ def delete_window() -> None:
     Спрашевает перед закрытием.
     :return: None
     """
-    _ask: bool = messagebox.askyesno('Выход из оболочки', 'Выйти?')
+    _ask: bool = messagebox.askyesno('Exiting', 'Exit?')
     if _ask:
         root.destroy()
 
