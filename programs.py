@@ -351,8 +351,16 @@ class Word(Program):
         word.start()
 
 
-with open("config.json") as config_file:
-    config = json.load(config_file)
+try:
+    with open("config.json") as config_file:
+        config = json.load(config_file)
+except FileNotFoundError:
+    config = {
+        "canvas_width": 1600,
+        "canvas_height": 900,
+        "panel_h": 40,
+        "background": "imgs/desktop/desktop2.png"
+    }
 
 canvas_height: int = config['canvas_height']
 icon_size: int = config['panel_h']
