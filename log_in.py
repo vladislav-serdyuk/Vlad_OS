@@ -2,6 +2,8 @@ import tkinter
 from tkinter import Tk, Canvas, messagebox, ttk
 import json
 import hashlib
+import traceback
+from datetime import datetime
 
 from menu import MainMenu
 from create_new_user_manager import NewUser
@@ -11,6 +13,10 @@ class LogIn:
     def __init__(self, root: Tk, c: Canvas):
         self.c = c
         self.root = root
+
+        with open('log.txt', 'a') as file:
+            _date: str = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
+            file.write(f'{_date}: INFO: login_init_start\n')
 
         try:
             with open('user_config.json') as file:
@@ -35,12 +41,24 @@ class LogIn:
             self.password_entry = ttk.Entry(self._root)
             self.password_entry.grid(column=1, row=1, columnspan=2, sticky='NSEW')
             ttk.Button(self._root, text='Log in', command=self.authentication).grid(column=2, row=2, sticky='NSEW')
+            with open('log.txt', 'a') as file:
+                _date: str = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
+                file.write(f'{_date}: INFO: login_init_end\n')
 
     def authentication(self):
+        with open('log.txt', 'a') as file:
+            _date: str = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
+            file.write(f'{_date}: INFO: authentication_start\n')
         if hashlib.sha256(self.password_entry.get().encode('utf-8')).hexdigest() == self.config['password_sha256']:
+            with open('log.txt', 'a') as file:
+                _date: str = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
+                file.write(f'{_date}: INFO: authentication_good\n')
             self._root.destroy()
             self.log_in()
         else:
+            with open('log.txt', 'a') as file:
+                _date: str = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
+                file.write(f'{_date}: INFO: authentication_no\n')
             messagebox.showwarning('Password incorrect', 'Password incorrect')
 
     def log_in(self):
@@ -48,11 +66,10 @@ class LogIn:
         root = self.root
         try:
             menu: MainMenu = MainMenu(c, root)
-        except Exception as e:  # error_handler
+        except Exception:  # error_handler
             with open('log.txt', 'a') as file:
                 _date: str = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
-                file.write(f'{_date}: initMenu: {e}\n')
+                file.write(f'{_date}: ERROR:\n{traceback.format_exc()}\n')
             exit()
 
         c.bind('<Button-3>', menu.popup)
-
