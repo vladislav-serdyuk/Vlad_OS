@@ -17,12 +17,25 @@ class Taskbar:
         Создаёт панель задачь на хосте
         :param c: холст
         """
+
+        with open('log.txt', 'a') as file:
+            _date: str = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
+            file.write(f'{_date}: INFO: taskbar_init_start\n')
+
         self.time_text_id: int = 0
         self.date_text_id: int = 0
         self.c: Canvas = c
 
-        with open("config.json") as config_file:
-            config = json.load(config_file)
+        try:
+            with open("config.json") as config_file:
+                config = json.load(config_file)
+        except FileNotFoundError:
+            config = {
+                "canvas_width": 1600,
+                "canvas_height": 900,
+                "panel_h": 40,
+                "background": "imgs/desktop/desktop2.png"
+            }
 
         canvas_width: int = config['canvas_width']
         canvas_height: int = config['canvas_height']
@@ -44,6 +57,10 @@ class Taskbar:
             text=f"{Taskbar.weekday()} {now.strftime('%d.%m.%Y')}", fill='white')
 
         self.c.after(0, self.run_taskbar)
+
+        with open('log.txt', 'a') as file:
+            _date: str = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
+            file.write(f'{_date}: INFO: taskbar_init_end\n')
 
     @staticmethod
     def weekday() -> str:
