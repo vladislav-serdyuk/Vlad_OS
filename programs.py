@@ -23,6 +23,7 @@ from pynput.keyboard import Key, Controller
 from tkinter import Canvas, Tk, PhotoImage, Button, Menu, Toplevel, Label, simpledialog
 from abc import ABC, abstractmethod
 from PIL import Image, ImageTk
+import win32gui
 
 
 class Program(ABC):
@@ -122,6 +123,7 @@ class Prog(Program):
     """
     debug prog
     """
+
     def __init__(self, c: Canvas, root: Tk):
         super().__init__(c, root)
         self.icon_image = ImageTk.PhotoImage(Image.open('imgs/hw/HW.png').resize((icon_size, icon_size)))
@@ -366,6 +368,12 @@ class Link(Program):
         :return: None
         """
         self.obj = simpledialog.askstring('Creating link', 'Entry object name')
+        try:
+            large, small = win32gui.ExtractIconEx(file_path, 0)
+            win32api.DestroyIcon(small[0])
+        except Exception:
+            pass
+        self.icon_image = ImageTk.PhotoImage(Image.fromhandle(large[0]).resize((icon_size, icon_size)))
         button: Button = tkinter.Button(height=icon_size, width=icon_size, image=self.icon_image, command=self.open)
         self.link_id: int = self.c.create_window(x, y, height=icon_size, width=icon_size, anchor='sw', window=button)
         menu: Menu = tkinter.Menu(tearoff=0)
