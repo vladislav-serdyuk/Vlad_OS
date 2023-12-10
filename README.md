@@ -4,3 +4,4 @@
 - wx
 - pillow
 - pynput
+- pywin32
