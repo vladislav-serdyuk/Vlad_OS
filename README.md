@@ -4,4 +4,3 @@
 - wx
 - pillow
 - pynput
-- icoextract
