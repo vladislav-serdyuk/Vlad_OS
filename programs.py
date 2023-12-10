@@ -20,7 +20,7 @@ import tkinter
 from tkinter import ttk
 import json
 from pynput.keyboard import Key, Controller
-from tkinter import Canvas, Tk, PhotoImage, Button, Menu, Toplevel, Label
+from tkinter import Canvas, Tk, PhotoImage, Button, Menu, Toplevel, Label, simpledialog
 from abc import ABC, abstractmethod
 from PIL import Image, ImageTk
 
@@ -349,6 +349,32 @@ class Word(Program):
     def open():
         import word
         word.start()
+
+
+class Link(Program):
+    def __init__(self, c: Canvas, root: Tk):
+        super().__init__(c, root)
+        self.icon_image = ImageTk.PhotoImage(Image.open('imgs/default.png').resize((icon_size, icon_size)))
+        self.obj = ''
+        self.link_id = 0
+
+    def create_link(self, x: float, y: float):
+        """
+        Создание ярлыка на координатах x и y
+        :param x: x
+        :param y: y
+        :return: None
+        """
+        self.obj = simpledialog.askstring('Creating link', 'Entry object name')
+        button: Button = tkinter.Button(height=icon_size, width=icon_size, image=self.icon_image, command=self.open)
+        self.link_id: int = self.c.create_window(x, y, height=icon_size, width=icon_size, anchor='sw', window=button)
+        menu: Menu = tkinter.Menu(tearoff=0)
+        menu.add_command(label='Удалить', command=lambda: self.delete_link(self.link_id))
+        button.bind('<Button-3>', lambda event: menu.post(event.x_root, event.y_root))
+
+    def open(self) -> None:
+        import os
+        os.popen(self.obj)
 
 
 try:
