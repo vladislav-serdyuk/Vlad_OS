@@ -6,7 +6,7 @@ from tkinter import Menu, Canvas, Tk, Event
 from datetime import datetime
 import traceback
 
-from programs import About, Prog, ControlPanel, Pentagon, Cmd, Word
+from programs import About, Prog, ControlPanel, Pentagon, Cmd, Word, Link
 
 
 class MainMenu:
@@ -55,6 +55,7 @@ class MainMenu:
         self.menu.add_command(label='Place on taskbar About', command=about.create_link_on_task_bar)
         self.menu.add_command(label='Place on taskbar Terminal', command=cmd.create_link_on_task_bar)
         self.menu.add_command(label='Place on taskbar Word', command=word.create_link_on_task_bar)
+        self.menu.add_command(label='Create link on taskbar', command=lambda: Link(c, root).create_link_on_task_bar())
         self.menu.add_command(label='Place on taskbar HW', command=prog.create_link_on_task_bar)
         self.menu.add_command(label='Place on taskbar "Взлом пентагона"',
                               command=pentagon.create_link_on_task_bar)
