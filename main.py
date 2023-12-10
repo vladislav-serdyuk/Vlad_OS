@@ -1,3 +1,3 @@
-from vlad_os_init import VladOSApp
+from __init__ import VladOSApp
 
 VladOSApp().mainloop()
