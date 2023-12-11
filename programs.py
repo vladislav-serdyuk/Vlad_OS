@@ -24,6 +24,9 @@ from tkinter import Canvas, Tk, PhotoImage, Button, Menu, Toplevel, Label, simpl
 from abc import ABC, abstractmethod
 from PIL import Image, ImageTk
 import win32gui
+import win32ui
+import win32api
+import win32con
 
 
 class Program(ABC):
@@ -368,12 +371,39 @@ class Link(Program):
         :return: None
         """
         self.obj = simpledialog.askstring('Creating link', 'Entry object name')
+        if self.obj == '':
+            return
+        ico_x = win32api.GetSystemMetrics(win32con.SM_CXICON)
+        ico_y = win32api.GetSystemMetrics(win32con.SM_CYICON)
         try:
-            large, small = win32gui.ExtractIconEx(file_path, 0)
-            win32api.DestroyIcon(small[0])
-        except Exception:
-            pass
-        self.icon_image = ImageTk.PhotoImage(Image.fromhandle(large[0]).resize((icon_size, icon_size)))
+            large, small = win32gui.ExtractIconEx(self.obj, 0)
+            win32gui.DestroyIcon(small[0])
+
+            hdc = win32ui.CreateDCFromHandle(win32gui.GetDC(0))
+            hbmp = win32ui.CreateBitmap()
+            hbmp.CreateCompatibleBitmap(hdc, ico_x, ico_y)
+            hdc = hdc.CreateCompatibleDC()
+
+            hdc.SelectObject(hbmp)
+            hdc.DrawIcon((0, 0), large[0])
+            # print(hbmp.GetBitmapBits())
+            img = Image.new('RGBA', (32, 32))
+            # print(len(hbmp.GetBitmapBits()))
+            data_row = hbmp.GetBitmapBits()
+            # print(data_row)
+            data_a = list(map(lambda item: item if item >= 0 else 256 + item, data_row[::4]))
+            # data_a = list(map(lambda item: 255, data_row[::4]))
+            data_g = list(map(lambda item: item if item >= 0 else 256 + item, data_row[1::4]))
+            data_r = list(map(lambda item: item if item >= 0 else 256 + item, data_row[2::4]))
+            data_b = list(map(lambda item: item if item >= 0 else 256 + item, data_row[3::4]))
+            print(list(zip(data_r, data_g, data_b, data_a)))
+            img.putdata(list(zip(data_r, data_g, data_b, data_a)))
+            # img = Image.frombuffer('RGB', (icon_size, icon_size),
+            #                        hbmp.GetBitmapBits())
+            self.icon_image = ImageTk.PhotoImage(img.resize((icon_size, icon_size)))
+        except Exception as e:
+            print(f'{e.__class__.__name__}: {e}')
+        # self.icon_image = ImageTk.PhotoImage(Image.fromhandle(large[0]).resize((icon_size, icon_size)))
         button: Button = tkinter.Button(height=icon_size, width=icon_size, image=self.icon_image, command=self.open)
         self.link_id: int = self.c.create_window(x, y, height=icon_size, width=icon_size, anchor='sw', window=button)
         menu: Menu = tkinter.Menu(tearoff=0)
