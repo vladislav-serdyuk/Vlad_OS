@@ -17,6 +17,7 @@ class ProgName(Program): # сосдаём класс
 """
 
 import tkinter
+import os
 from tkinter import ttk
 import json
 from pynput.keyboard import Key, Controller
@@ -396,7 +397,7 @@ class Link(Program):
             data_g = list(map(lambda item: item if item >= 0 else 256 + item, data_row[1::4]))
             data_r = list(map(lambda item: item if item >= 0 else 256 + item, data_row[2::4]))
             data_b = list(map(lambda item: item if item >= 0 else 256 + item, data_row[3::4]))
-            print(list(zip(data_r, data_g, data_b, data_a)))
+            # print(list(zip(data_r, data_g, data_b, data_a)))
             img.putdata(list(zip(data_r, data_g, data_b, data_a)))
             # img = Image.frombuffer('RGB', (icon_size, icon_size),
             #                        hbmp.GetBitmapBits())
