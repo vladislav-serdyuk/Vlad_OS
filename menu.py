@@ -6,7 +6,7 @@ from tkinter import Menu, Canvas, Tk, Event
 from datetime import datetime
 import traceback
 
-from programs import About, Prog, ControlPanel, Pentagon, Cmd, Word, Link
+from programs import About, Prog, ControlPanel, Pentagon, Cmd, Word, Link, Taskmgr
 
 
 class MainMenu:
@@ -37,6 +37,7 @@ class MainMenu:
             pentagon: Pentagon = init(Pentagon)
             cmd: Cmd = init(Cmd)
             word: Word = init(Word)
+            taskmgr: Taskmgr = init(Taskmgr)
         except Exception:  # error_handler
             with open('log.txt', 'a') as file:
                 _date: str = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
@@ -46,6 +47,7 @@ class MainMenu:
         self.menu.add_command(label='Open Control panel', command=control_panel.open)
         self.menu.add_command(label='Open About', command=about.open)
         self.menu.add_command(label='Open Terminal', command=cmd.open)
+        self.menu.add_command(label='Open Task Manager', command=taskmgr.open)
         self.menu.add_command(label='Open Word', command=word.open)
 
         self.menu.add_separator()
@@ -54,6 +56,7 @@ class MainMenu:
                               command=control_panel.create_link_on_task_bar)
         self.menu.add_command(label='Place on taskbar About', command=about.create_link_on_task_bar)
         self.menu.add_command(label='Place on taskbar Terminal', command=cmd.create_link_on_task_bar)
+        self.menu.add_command(label='Place on taskbar Task Manager', command=taskmgr.create_link_on_task_bar)
         self.menu.add_command(label='Place on taskbar Word', command=word.create_link_on_task_bar)
         self.menu.add_command(label='Create link on taskbar', command=lambda: Link(c, root).create_link_on_task_bar())
         self.menu.add_command(label='Place on taskbar HW', command=prog.create_link_on_task_bar)
