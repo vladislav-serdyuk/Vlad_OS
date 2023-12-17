@@ -17,6 +17,7 @@ class ProgName(Program): # сосдаём класс
 """
 
 import tkinter
+import tkinter as tk
 import os
 from tkinter import ttk
 import json
@@ -47,7 +48,7 @@ class Program(ABC):
         self.c: Canvas = c
         self.root: Tk = root
         self.is_create: bool = False
-        # self.icon_image: PhotoImage = ImageTk.PhotoImage(Image.open('').resize((icon_size, icon_size)))
+        self.icon_image: PhotoImage = ImageTk.PhotoImage(Image.open('imgs\\default.png').resize((icon_size, icon_size)))
         self.icon_pos_x = None
 
     def create_link(self, x: float, y: float) -> None:
@@ -360,7 +361,6 @@ class Word(Program):
 class Link(Program):
     def __init__(self, c: Canvas, root: Tk):
         super().__init__(c, root)
-        self.icon_image = ImageTk.PhotoImage(Image.open('imgs/default.png').resize((icon_size, icon_size)))
         self.obj = ''
         self.link_id = 0
 
@@ -414,6 +414,66 @@ class Link(Program):
     def open(self) -> None:
         import os
         os.popen(self.obj)
+
+
+class Taskmgr(Program):
+    def __init__(self, c: Canvas, root: Tk):
+        super().__init__(c, root)
+        self.icon_image = ImageTk.PhotoImage(Image.open('imgs\\taskmgr\\taskmgr.png').resize((icon_size, icon_size)))
+
+    @staticmethod
+    def open() -> None:
+        root = tkinter.Toplevel()
+        root.title('Task manager')
+        root.resizable(False, True)
+
+        csv_list_list = []
+        columns = []
+
+        vscrollbar = ttk.Scrollbar(root, orient='vertical')
+        vscrollbar.pack(side='right', fill='y')
+        canvas = tk.Canvas(root, width=850, height=400, highlightthickness=0,
+                           yscrollcommand=vscrollbar.set)
+        canvas.pack(fill='both', expand=True)
+        vscrollbar.config(command=canvas.yview)
+
+        interior = ttk.Frame(canvas)
+        canvas.create_window(0, 0, window=interior, anchor='nw')
+
+        def task_update():
+            csv_list_list[:] = [line[1:-1].replace('\xa0', ' ').split('","') for line in
+                                os.popen('tasklist /fo CSV').read().encode('cp1251').decode('cp866').split('\n') if
+                                line != '']
+            columns[:] = csv_list_list[0]
+            root.after(1000, task_update)
+
+        def resort(i):
+            csv_list_list[1:] = sorted(csv_list_list[1:], key=lambda x: int(x[i].replace('КБ', '')
+                                                                            .replace(' ', '')) if x[i].replace('КБ', '')
+                                       .replace(' ', '').isdigit() else x[i].lower())
+            for item in labels:
+                item.destroy()
+            labels.clear()
+
+            for i, col in enumerate(columns):
+                ttk.Button(interior, text=col, command=lambda i=i: resort(i)).grid(row=0, column=i, sticky='NSEW')
+
+            for row, task in enumerate(csv_list_list[1:]):
+                for column, elem in enumerate(task):
+                    if elem.replace('КБ', '').replace(' ', '').isdigit():
+                        label = ttk.Label(interior, text=elem, anchor='e')
+                        label.grid(row=row + 1, column=column, sticky='NSEW')
+                        labels.append(label)
+                    else:
+                        label = ttk.Label(interior, text=elem)
+                        label.grid(row=row + 1, column=column, sticky='NSEW')
+                        labels.append(label)
+
+        labels = []
+        task_update()
+        resort(0)
+        interior.bind('<Configure>',
+                      lambda event: canvas.config(scrollregion=canvas.bbox('all'), width=interior.winfo_reqwidth()))
 
 
 try:
