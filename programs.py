@@ -84,7 +84,7 @@ class Program(ABC):
             pos = 0
             while True:  # перебор позицый иконки
                 if pos not in icon_pos:  # берём не занятую
-                    self.create_link(pos, canvas_height)
+                    self.create_link(pos, icon_size)
                     icon_pos.add(pos)  # добавляем в список позицый
                     self.icon_pos_x = pos
                     return
@@ -425,6 +425,7 @@ class Taskmgr(Program):
     def open() -> None:
         root = tkinter.Toplevel()
         root.title('Task manager')
+        root.iconbitmap('imgs\\taskmgr\\taskmgr.ico')
         root.resizable(False, True)
 
         csv_list_list = []
