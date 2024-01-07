@@ -24,7 +24,7 @@ class VladOSApp(Tk):
             file.write(f'{_date}: INFO: app_init_start\n')
 
         self.overrideredirect(True)  # delete - o x
-        self.state('zoomed')  # full screen
+        # self.state('zoomed')  # full screen
         self.title('vladOS')
         self.iconbitmap('icon_os.ico')
 
@@ -39,13 +39,14 @@ class VladOSApp(Tk):
                 "panel_h": 40,
                 "background": "imgs/desktop/desktop2.png"
             }
+        self.geometry(f'{config["canvas_width"]}x{config["panel_h"]}+0+{config["canvas_height"]-config["panel_h"]}')
 
         self.canvas: Canvas = Canvas(self, width=config['canvas_width'],
-                                     height=config['canvas_height'])  # создание холста
+                                     height=config['panel_h'])  # создание холста
         self.canvas.pack()
 
         try:
-            self.desktop = Desktop(self.canvas)
+            self.desktop = Desktop()
             Taskbar(self.canvas)
             self.power_button = Power(self.canvas, self)
             self.power_button.create_link_on_task_bar()
