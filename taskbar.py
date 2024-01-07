@@ -43,17 +43,17 @@ class Taskbar:
         self.canvas_width: int = canvas_width
         self.canvas_height: int = canvas_height
 
-        self.c.create_rectangle(0, self.canvas_height - panel_h, self.canvas_width,  # create taskbar
-                                self.canvas_height, fill='black', outline='grey')
+        self.c.create_rectangle(0, 0, self.canvas_width,  # create taskbar
+                                panel_h, fill='black', outline='grey')
 
         now: datetime = datetime.now()
 
         self.time_text_id: int = self.c.create_text(  # create time text
-            canvas_width - 50, canvas_height - panel_h * 0.75, anchor='center',
+            canvas_width - 50, panel_h * 0.25, anchor='center',
             text=now.strftime('%H:%M'), fill='white')
 
         self.date_text_id: int = self.c.create_text(  # create date text
-            canvas_width - 50, canvas_height - panel_h * 0.3, anchor='center',
+            canvas_width - 50, panel_h * 0.7, anchor='center',
             text=f"{Taskbar.weekday()} {now.strftime('%d.%m.%Y')}", fill='white')
 
         self.c.after(0, self.run_taskbar)
