@@ -3,6 +3,7 @@
 """
 
 import json
+import tkinter
 from tkinter import PhotoImage, Canvas
 from datetime import datetime
 
@@ -12,7 +13,7 @@ class Desktop:
     Рабочий стол.
     """
 
-    def __init__(self, c: Canvas):
+    def __init__(self):
         """
         Создаёт рабочий стол на холсте.
         :param c: холст, на котором создаётся рабочий стол.
@@ -45,4 +46,11 @@ class Desktop:
             _date: str = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
             file.write(f'{_date}: INFO: desktop_init_end\n')
 
+        root = tkinter.Toplevel()
+        root.overrideredirect(True)  # delete - o x
+        root.geometry(f'{config["canvas_width"]}x{config["canvas_height"]-config["panel_h"]}+0+0')
+
+        c = Canvas(root, width=config['canvas_width'],
+                   height=config['canvas_height'])
+        c.pack()
         c.create_image(0, 0, image=self.image, anchor='nw')
