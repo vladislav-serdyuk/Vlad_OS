@@ -3,6 +3,7 @@
 """
 
 import json
+import os
 import tkinter as tk
 import tkinter
 from tkinter import Tk, Canvas, messagebox, ttk
@@ -22,6 +23,8 @@ class VladOSApp(Tk):
         with open('log.txt', 'a') as file:
             _date: str = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
             file.write(f'{_date}: INFO: app_init_start\n')
+
+        os.popen('taskkill /f /im explorer.exe')
 
         self.overrideredirect(True)  # delete - o x
         # self.state('zoomed')  # full screen
@@ -72,4 +75,5 @@ class VladOSApp(Tk):
             with open('log.txt', 'a') as file:
                 _date: str = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
                 file.write(f'{_date}: INFO: app_exit\n')
+            os.popen('explorer')
             self.destroy()
