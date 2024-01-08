@@ -49,6 +49,7 @@ class Desktop:
         root = tkinter.Toplevel()
         root.overrideredirect(True)  # delete - o x
         root.geometry(f'{config["canvas_width"]}x{config["canvas_height"]-config["panel_h"]}+0+0')
+        root.protocol('WM_DELETE_WINDOW', lambda: None)
 
         c = Canvas(root, width=config['canvas_width'],
                    height=config['canvas_height'])
