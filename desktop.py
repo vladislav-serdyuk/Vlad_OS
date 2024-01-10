@@ -47,6 +47,8 @@ class Desktop:
             file.write(f'{_date}: INFO: desktop_init_end\n')
 
         root = tkinter.Toplevel()
+        self.root = root
+        self.lower()
         root.overrideredirect(True)  # delete - o x
         root.geometry(f'{config["canvas_width"]}x{config["canvas_height"]-config["panel_h"]}+0+0')
         root.protocol('WM_DELETE_WINDOW', lambda: None)
@@ -55,3 +57,7 @@ class Desktop:
                    height=config['canvas_height'])
         c.pack()
         c.create_image(0, 0, image=self.image, anchor='nw')
+
+    def lower(self):
+        self.root.lower()
+        self.root.after(1, self.lower)
