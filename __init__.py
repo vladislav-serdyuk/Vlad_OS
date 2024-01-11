@@ -77,3 +77,7 @@ class VladOSApp(Tk):
                 file.write(f'{_date}: INFO: app_exit\n')
             os.popen('explorer')
             self.destroy()
+
+    def destroy_and_start_explorer(self):
+        os.popen('explorer')
+        self.destroy()
