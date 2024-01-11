@@ -22,7 +22,7 @@ class LogIn:
             with open('user_config.json') as file:
                 self.config = json.load(file)
         except FileNotFoundError:
-            NewUser()
+            NewUser(root)
         else:
             self._root = tkinter.Toplevel(root)  # create login window
             self._root.resizable(True, False)
