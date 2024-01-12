@@ -46,4 +46,4 @@ class NewUser:
         with open('log.txt', 'a') as file:
             _date: str = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
             file.write(f'{_date}: INFO: newuser_create_user\n')
-        self.root.destroy_and_start_explorer()
+        self.root.restart()
