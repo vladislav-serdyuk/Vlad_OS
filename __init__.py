@@ -78,6 +78,6 @@ class VladOSApp(Tk):
             os.popen('explorer')
             self.destroy()
 
-    def destroy_and_start_explorer(self):
-        os.popen('explorer')
+    def restart(self):
         self.destroy()
+        os.popen('restart.bat')
