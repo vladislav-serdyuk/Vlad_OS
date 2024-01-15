@@ -153,42 +153,26 @@ class ControlPanel(Program):
 
     def open(self) -> None:
         _root: Toplevel = tkinter.Toplevel()
-        _root.geometry('250x80')
+        _root.geometry('100x80')
         _root.iconbitmap('imgs/control_panel/control_panel.ico')
         _root.title('Control panel')
 
-        for r in range(3):
+        for r in range(2):
             _root.grid_rowconfigure(r, weight=1)
 
-        for c in range(2):
+        for c in range(1):
             _root.grid_columnconfigure(c, weight=1)
 
-        ttk.Button(_root, text='Mouse', command=self.open_mouse_menu).grid(row=0, column=0, sticky='NSEW')
-        ttk.Button(_root, text='Shutdown', command=Power.shutdown, ) \
-            .grid(row=1, column=0, sticky='NSEW')
-        ttk.Button(_root, text='Screenshot', command=ControlPanel.screenshot) \
-            .grid(row=0, column=1, sticky='NSEW')
-        ttk.Button(_root, text='Getting started', command=About.open) \
-            .grid(row=1, column=1, sticky='NSEW')
-        ttk.Button(_root, text='Components', command=self.open_modul_menu) \
-            .grid(row=2, column=0, sticky='NSEW')
-        ttk.Button(_root, text='Sound', command=self.open_sound_menu).grid(row=2, column=1, sticky='NSEW')
+        ttk.Button(_root, text='Cursors', command=self.open_cursors_menu).grid(row=0, column=0, sticky='NSEW')
+        ttk.Button(_root, text='Getting started', command=About.open).grid(row=1, column=0, sticky='NSEW')
 
         _root.mainloop()
 
-    @staticmethod
-    def screenshot() -> None:
-        keyboard: Controller = Controller()
-        keyboard.press(Key.cmd)  # win
-        keyboard.press(Key.print_screen)
-        keyboard.release(Key.print_screen)
-        keyboard.release(Key.cmd)
-
-    def open_mouse_menu(self) -> None:
+    def open_cursors_menu(self) -> None:
         _root: Toplevel = tkinter.Toplevel()
         _root.geometry('300x100')
         _root.iconbitmap('imgs/control_panel/control_panel.ico')
-        _root.title('Mouse')
+        _root.title('Cursors')
 
         for r in range(4):
             _root.grid_rowconfigure(r, weight=1)
@@ -226,67 +210,6 @@ class ControlPanel(Program):
 
         _root.mainloop()
 
-    @staticmethod
-    def open_modul_menu() -> None:
-        _root: Toplevel = tkinter.Toplevel()
-        _root.geometry('150x150')
-        _root.iconbitmap('imgs/control_panel/control_panel.ico')
-        _root.title('Components')
-
-        for c in range(1):
-            _root.grid_columnconfigure(c, weight=1)
-
-        for r in range(9):
-            _root.grid_rowconfigure(r, weight=1)
-
-        ttk.Label(_root, text='Desktop').grid(row=0, column=0, sticky='w')
-        ttk.Label(_root, text='Taskbar').grid(row=1, column=0, sticky='w')
-        ttk.Label(_root, text='Main context menu').grid(row=2, column=0, sticky='w')
-        ttk.Label(_root, text='About').grid(row=3, column=0, sticky='w')
-        ttk.Label(_root, text='Control Panel').grid(row=4, column=0, sticky='w')
-        ttk.Label(_root, text='HW').grid(row=5, column=0, sticky='w')
-        ttk.Label(_root, text='Pentagon').grid(row=6, column=0, sticky='w')
-        ttk.Label(_root, text='Log in manager').grid(row=7, column=0, sticky='w')
-        ttk.Label(_root, text='Create new user manager').grid(row=8, column=0, sticky='w')
-
-        _root.mainloop()
-
-    @staticmethod
-    def open_sound_menu() -> None:
-        _root: Toplevel = tkinter.Toplevel()
-        _root.geometry('150x75')
-        _root.iconbitmap('imgs/control_panel/control_panel.ico')
-        _root.title('Sound')
-
-        _root.grid_columnconfigure(0, weight=1)
-        for r in range(3):
-            _root.grid_rowconfigure(r, weight=1)
-
-        ttk.Button(_root, text='Up sound',
-                   command=ControlPanel.sound_up).grid(row=0, column=0, sticky='NSEW')
-        ttk.Button(_root, text='Down sound',
-                   command=ControlPanel.sound_down).grid(row=1, column=0, sticky='NSEW')
-        ttk.Button(_root, text='Mute sound',
-                   command=ControlPanel.sound_mute).grid(row=2, column=0, sticky='NSEW')
-        _root.mainloop()
-
-    @staticmethod
-    def sound_up() -> None:
-        keyboard = Controller()
-        keyboard.press(Key.media_volume_up)
-        keyboard.release(Key.media_volume_up)
-
-    @staticmethod
-    def sound_down() -> None:
-        keyboard = Controller()
-        keyboard.press(Key.media_volume_down)
-        keyboard.release(Key.media_volume_down)
-
-    @staticmethod
-    def sound_mute() -> None:
-        keyboard = Controller()
-        keyboard.press(Key.media_volume_mute)
-        keyboard.release(Key.media_volume_mute)
 
 
 class Power(Program):
