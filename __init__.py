@@ -13,7 +13,7 @@ import traceback
 from desktop import Desktop
 from taskbar import Taskbar
 from programs import Power
-from log_in import LogIn
+from menu import MainMenu
 
 
 class VladOSApp(Tk):
@@ -53,7 +53,7 @@ class VladOSApp(Tk):
             Taskbar(self.canvas)
             self.power_button = Power(self.canvas, self)
             self.power_button.create_link_on_task_bar()
-            LogIn(self, self.canvas)  # login
+            self.bind('<Button-1>', MainMenu(self.canvas, self).popup)
         except Exception:  # error_handler
             with open('log.txt', 'a') as file:
                 _date: str = datetime.now().strftime('%d.%m.%Y %H:%M:%S')
