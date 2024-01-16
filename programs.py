@@ -152,64 +152,7 @@ class ControlPanel(Program):
                                              .resize((icon_size, icon_size)))
 
     def open(self) -> None:
-        _root: Toplevel = tkinter.Toplevel()
-        _root.geometry('100x80')
-        _root.iconbitmap('imgs/control_panel/control_panel.ico')
-        _root.title('Control panel')
-
-        for r in range(2):
-            _root.grid_rowconfigure(r, weight=1)
-
-        for c in range(1):
-            _root.grid_columnconfigure(c, weight=1)
-
-        ttk.Button(_root, text='Cursors', command=self.open_cursors_menu).grid(row=0, column=0, sticky='NSEW')
-        ttk.Button(_root, text='Getting started', command=About.open).grid(row=1, column=0, sticky='NSEW')
-
-        _root.mainloop()
-
-    def open_cursors_menu(self) -> None:
-        _root: Toplevel = tkinter.Toplevel()
-        _root.geometry('300x100')
-        _root.iconbitmap('imgs/control_panel/control_panel.ico')
-        _root.title('Cursors')
-
-        for r in range(4):
-            _root.grid_rowconfigure(r, weight=1)
-
-        for c in range(4):
-            _root.grid_columnconfigure(c, weight=1)
-
-        ttk.Button(_root, text='Set default cursor', command=lambda: self.root.config(cursor='arrow')) \
-            .grid(row=0, column=0, columnspan=2, sticky='NSEW')
-        ttk.Button(_root, text='Set hand2 cursor', command=lambda: self.root.config(cursor='hand2')) \
-            .grid(row=1, column=0, columnspan=2, sticky='NSEW')
-
-        ttk.Label(_root, text='Other cursor').grid(row=0, column=2, columnspan=2, sticky='NSEW')
-        entry = ttk.Entry(_root)
-        entry.grid(row=1, column=2, columnspan=2, sticky='NSEW')
-
-        ttk.Button(_root, text='Man', command=lambda: self.root.config(cursor='man')) \
-            .grid(row=2, column=0, sticky='NSEW')
-        ttk.Button(_root, text='Star', command=lambda: self.root.config(cursor='star')) \
-            .grid(row=2, column=1, sticky='NSEW')
-        ttk.Button(_root, text='Plus', command=lambda: self.root.config(cursor='plus')) \
-            .grid(row=2, column=2, sticky='NSEW')
-        ttk.Button(_root, text='Cross', command=lambda: self.root.config(cursor='cross')) \
-            .grid(row=2, column=3, sticky='NSEW')
-        ttk.Button(_root, text='Circle', command=lambda: self.root.config(cursor='circle')) \
-            .grid(row=3, column=0, sticky='NSEW')
-        ttk.Button(_root, text='Dot', command=lambda: self.root.config(cursor='dot')) \
-            .grid(row=3, column=1, sticky='NSEW')
-        ttk.Button(_root, text='Target', command=lambda: self.root.config(cursor='target')) \
-            .grid(row=3, column=2, sticky='NSEW')
-        ttk.Button(_root, text='Hand1', command=lambda: self.root.config(cursor='hand1')) \
-            .grid(row=3, column=3, sticky='NSEW')
-
-        entry.bind('<Return>', lambda event: self.root.config(cursor=entry.get()))
-
-        _root.mainloop()
-
+        os.popen('explorer Shell:::{5399E694-6CE5-4D6C-8FCE-1D8870FDCBA0}')
 
 
 class Power(Program):
@@ -346,59 +289,7 @@ class Taskmgr(Program):
 
     @staticmethod
     def open() -> None:
-        root = tkinter.Toplevel()
-        root.title('Task manager')
-        root.iconbitmap('imgs\\taskmgr\\taskmgr.ico')
-        root.resizable(False, True)
-
-        csv_list_list = []
-        columns = []
-
-        vscrollbar = ttk.Scrollbar(root, orient='vertical')
-        vscrollbar.pack(side='right', fill='y')
-        canvas = tk.Canvas(root, width=850, height=400, highlightthickness=0,
-                           yscrollcommand=vscrollbar.set)
-        canvas.pack(fill='both', expand=True)
-        vscrollbar.config(command=canvas.yview)
-
-        interior = ttk.Frame(canvas)
-        canvas.create_window(0, 0, window=interior, anchor='nw')
-
-        def task_update():
-            csv_list_list[:] = [line[1:-1].replace('\xa0', ' ').split('","') for line in
-                                os.popen('tasklist /fo CSV').read().encode('cp1251').decode('cp866').split('\n') if
-                                line != '']
-            columns[:] = csv_list_list[0]
-            root.after(1000, task_update)
-
-        def resort(i):
-            csv_list_list[1:] = sorted(csv_list_list[1:], key=lambda x: int(x[i].replace('КБ', '')
-                                                                            .replace(' ', '')) if x[i].replace('КБ', '')
-                                       .replace(' ', '').isdigit() else x[i].lower())
-            for item in labels:
-                item.destroy()
-            labels.clear()
-
-            for i, col in enumerate(columns):
-                ttk.Button(interior, text=col, command=lambda i=i: resort(i)).grid(row=0, column=i, sticky='NSEW')
-
-            for row, task in enumerate(csv_list_list[1:]):
-                for column, elem in enumerate(task):
-                    if elem.replace('КБ', '').replace(' ', '').isdigit():
-                        label = ttk.Label(interior, text=elem, anchor='e')
-                        label.grid(row=row + 1, column=column, sticky='NSEW')
-                        labels.append(label)
-                    else:
-                        label = ttk.Label(interior, text=elem)
-                        label.grid(row=row + 1, column=column, sticky='NSEW')
-                        labels.append(label)
-
-        labels = []
-        task_update()
-        resort(0)
-        interior.bind('<Configure>',
-                      lambda event: canvas.config(scrollregion=canvas.bbox('all'), width=interior.winfo_reqwidth()))
-
+        os.popen('taskmgr')
 
 try:
     with open("config.json") as config_file:
